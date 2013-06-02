@@ -38,11 +38,11 @@ function GameObject:translate(dx, dy)
 end
 
 function GameObject:translateX(delta)
-    self.bbox:translate(delta, 0)
+    self:translate(delta, 0)
 end
 
 function GameObject:translateY(delta)
-    self.bbox:translate(0, delta)
+    self:translate(0, delta)
 end
 
 function GameObject:draw()

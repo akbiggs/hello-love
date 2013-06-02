@@ -14,18 +14,29 @@ end
 
 function PhysicsObject:update(dt)
     GameObject.update(self, dt)
-    
     self:applyGravity(dt)
     self:applyVelocity(dt)
 end
 
 function PhysicsObject:applyGravity(dt)
-    self.velocity.y = self.velocity.y + 50 * dt
+    self.velocity.y = self.velocity.y + 550 * dt
 end
 
 function PhysicsObject:applyVelocity(dt)
     self:translateX(self.velocity.x * dt)
     self:translateY(self.velocity.y * dt)
+end
+
+function PhysicsObject:land()
+    self.velocity.y = 0
+end
+
+function PhysicsObject:bumpHead()
+    self.velocity.y = 0
+end
+
+function PhysicsObject:hitWall()
+    self.velocity.x = 0
 end
 
 function PhysicsObject:draw()
