@@ -13,7 +13,7 @@ Player.static.right_keys = {"right", "D"}
 Player.static.jump_keys = {"up", "space"}
 
 Player.numJumps = 0
-Player.maxJumps = 2
+Player.maxJumps = 1
 
 function Player:initialize(position)
 	PhysicsObject.initialize(self, position, Player.size, nil)
