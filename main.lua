@@ -2,6 +2,7 @@ require "objects.world.player"
 require "objects.world.tile"
 require "engine.engine"
 require "engine.map"
+require "helpers.input"
 inspect = require "lib.inspect"
 vector = require "lib.hump.vector"
 
@@ -37,4 +38,8 @@ function love.draw()
     love.graphics.setShader(effect)
     map:draw()
     player:draw()
+end
+
+function love.keyreleased(key)
+    Input.keyStates.down[key] = nil
 end

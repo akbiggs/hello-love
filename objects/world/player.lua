@@ -1,6 +1,6 @@
 require "lib.middleclass"
 require "objects.base.physicsobject"
-require "helpers.inputhelper"
+require "helpers.input"
 
 vector = require "lib.hump.vector"
 inspect = require "lib.inspect"
@@ -12,7 +12,8 @@ Player.static.left_keys = {"left", "A"}
 Player.static.right_keys = {"right", "D"}
 Player.static.jump_keys = {"up", "space"}
 
-Player.canJump = false
+Player.numJumps = 0
+Player.maxJumps = 2
 
 function Player:initialize(position)
 	PhysicsObject.initialize(self, position, Player.size, nil)
@@ -23,15 +24,15 @@ function Player:update(dt)
 		self:fall()
 	end
 
-	if anyKeyDown(Player.left_keys) then
+	if Input:anyKeyDown(Player.left_keys) then
 		self:moveLeft(dt)
-	elseif anyKeyDown(Player.right_keys) then
+	elseif Input:anyKeyDown(Player.right_keys) then
 		self:moveRight(dt)
 	end
 
-	if anyKeyDown(Player.jump_keys) and self.canJump then
+	if Input:anyKeyTapped(Player.jump_keys) and self.numJumps < self.maxJumps then
 		self:jump(dt)
-end
+	end
 
 	PhysicsObject.update(self, dt)
 end
@@ -49,15 +50,16 @@ function Player:move(direction, dt)
 end
 
 function Player:fall(dt)
-	self.canJump = false
 end
 
 function Player:land()
-	self.canJump = true
+
+	self.numJumps = 0
 	PhysicsObject.land(self)
 end
 
 function Player:jump(dt)
 	self.velocity.y = -450
-	self.canJump = false
+	self.numJumps = self.numJumps + 1
+	print("Num jumps:" .. tostring(self.numJumps))
 end
