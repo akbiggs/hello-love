@@ -36,8 +36,12 @@ function Input:isKeyTapped(key)
 end
 
 function Input:onKeyTapped(key)
-	print("Inserting " .. tostring(key))
-	table.insert(Input.keyStates.down, key)
+	Input.keyStates.down[key] = true
+end
+
+function Input:onKeyReleased(key)
+	print("Releasing: " .. key)
+	Input.keyStates.down[key] = false
 end
 
 function Input:previouslyReleased(key)

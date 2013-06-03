@@ -50,10 +50,10 @@ function Player:move(direction, dt)
 end
 
 function Player:fall(dt)
+	self.numJumps = math.max(self.numJumps, 1)
 end
 
 function Player:land()
-
 	self.numJumps = 0
 	PhysicsObject.land(self)
 end

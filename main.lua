@@ -23,7 +23,6 @@ function love.load()
            return vec4(pow(cos((sxy.x-sxy.y)/20),2),pow(sin((sxy.y+sxy.x)/20),2),abs(1/(1+tan(length(sxy/20)))),1);
         }
     ]]
-    --effect:send("t", 0)
 end
 
 function love.update(dt)
@@ -31,7 +30,6 @@ function love.update(dt)
     player:update(dt)
 
     t = t + math.min(dt, 1/30)
-    --effect:send("t", t)
 end
 
 function love.draw()
@@ -41,5 +39,6 @@ function love.draw()
 end
 
 function love.keyreleased(key)
-    Input.keyStates.down[key] = nil
+    print("Releasing: " .. tostring(key))
+    Input:onKeyReleased(key)
 end
