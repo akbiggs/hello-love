@@ -40,7 +40,6 @@ function Input:onKeyTapped(key)
 end
 
 function Input:onKeyReleased(key)
-	print("Releasing: " .. key)
 	Input.keyStates.down[key] = false
 end
 

@@ -20,7 +20,7 @@ function Player:initialize(position)
 end
 
 function Player:update(dt)
-	if self.velocity.y > 20 then
+	if self.velocity.y > 50 then
 		self:fall()
 	end
 
@@ -61,5 +61,4 @@ end
 function Player:jump(dt)
 	self.velocity.y = -450
 	self.numJumps = self.numJumps + 1
-	print("Num jumps:" .. tostring(self.numJumps))
 end

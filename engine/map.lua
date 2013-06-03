@@ -21,7 +21,6 @@ function Map:initializeTileMap()
 		for col=1,self.data.width do
 			tileData = self:findTileDataFor(row, col, tileLayer)
 			if tileData ~= 0 then
-				print("Adding tile at: " .. tostring(col))
 				self:addTile(row, col)
 			end
 		end
