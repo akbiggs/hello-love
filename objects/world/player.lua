@@ -6,7 +6,7 @@ vector = require "lib.hump.vector"
 inspect = require "lib.inspect"
 
 Player = class("objects.world.Player", PhysicsObject)
-Player.static.size = vector(32, 32)
+Player.static.size = vector(32, 64)
 
 Player.static.left_keys = {"left", "A"}
 Player.static.right_keys = {"right", "D"}
@@ -59,6 +59,6 @@ function Player:land()
 end
 
 function Player:jump(dt)
-	self.velocity.y = -450
+	self.velocity.y = -350
 	self.numJumps = self.numJumps + 1
 end

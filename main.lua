@@ -3,14 +3,13 @@ require "objects.world.tile"
 require "engine.engine"
 require "engine.map"
 require "helpers.input"
-inspect = require "lib.inspect"
-vector = require "lib.hump.vector"
+local lick = require "lib.lick"
+local inspect = require "lib.inspect"
+local vector = require "lib.hump.vector"
 
 -- LOCALS
 local player = nil
 local map = Map:new("test")
-
-local t = 0
 
 -- LOVE CALLBACKS
 function love.load()
@@ -39,6 +38,5 @@ function love.draw()
 end
 
 function love.keyreleased(key)
-    print("Releasing: " .. tostring(key))
     Input:onKeyReleased(key)
 end
