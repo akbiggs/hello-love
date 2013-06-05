@@ -29,9 +29,7 @@ end
 function love.update(dt)
     HC:update(dt)
     player:update(dt)
-
-    t = t + math.min(dt, 1/30)
-end
+end 
 
 function love.draw()
     love.graphics.setShader(effect)
