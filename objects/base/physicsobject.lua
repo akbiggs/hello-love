@@ -19,7 +19,6 @@ function PhysicsObject:update(world, dt)
 end
 
 function PhysicsObject:applyGravity(world, dt)
-    print(world.gravity)
     self.velocity.y = self.velocity.y + world.gravity.y * dt
 end
 
