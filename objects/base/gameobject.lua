@@ -26,7 +26,7 @@ function GameObject:getY()
     return y
 end
 
-function GameObject:update(dt)
+function GameObject:update(world, dt)
 end
 
 function GameObject:moveTo(x, y)

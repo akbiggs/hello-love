@@ -19,9 +19,9 @@ function Player:initialize(position)
 	PhysicsObject.initialize(self, position, Player.size, nil)
 end
 
-function Player:update(dt)
+function Player:update(world, dt)
 	if self.velocity.y > 50 then
-		self:fall()
+		self:fall(dt)
 	end
 
 	if Input:anyKeyDown(Player.left_keys) then
@@ -34,7 +34,7 @@ function Player:update(dt)
 		self:jump(dt)
 	end
 
-	PhysicsObject.update(self, dt)
+	PhysicsObject.update(self, world, dt)
 end
 
 function Player:moveLeft(dt)
@@ -53,9 +53,9 @@ function Player:fall(dt)
 	self.numJumps = math.max(self.numJumps, 1)
 end
 
-function Player:land()
+function Player:land(world)
 	self.numJumps = 0
-	PhysicsObject.land(self)
+	PhysicsObject.land(self, world)
 end
 
 function Player:jump(dt)

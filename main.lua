@@ -1,7 +1,6 @@
-require "objects.world.player"
-require "objects.world.tile"
 require "engine.engine"
 require "engine.map"
+require "engine.world"
 require "helpers.input"
 lick = require "lib.lick"
 local inspect = require "lib.inspect"
@@ -10,12 +9,11 @@ local vector = require "lib.hump.vector"
 lick.reset = true
 
 -- LOCALS
-local player = nil
-local map = Map:new("test")
+local world = nil
 
 -- LOVE CALLBACKS
 function love.load()
-    player = Player:new(vector(200, 100))
+    world = World:new()   
 
     -- TESTING SHADERS
     effect = love.graphics.newShader [[
@@ -28,13 +26,12 @@ end
 
 function love.update(dt)
     HC:update(dt)
-    player:update(dt)
+    world:update(dt)
 end 
 
 function love.draw()
     love.graphics.setShader(effect)
-    map:draw()
-    player:draw()
+    world:draw() 
 end
 
 function love.keyreleased(key)

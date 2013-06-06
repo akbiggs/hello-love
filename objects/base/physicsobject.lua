@@ -1,4 +1,4 @@
-vector = require "lib.hump.vector"
+local vector = require "lib.hump.vector"
 require "lib.middleclass"
 require "objects.base.gameobject"
 require "objects.behaviors.collidable"
@@ -12,14 +12,15 @@ function PhysicsObject:initialize(position, size, texture)
     GameObject.initialize(self, position, size, texture)
 end
 
-function PhysicsObject:update(dt)
-    GameObject.update(self, dt)
-    self:applyGravity(dt)
+function PhysicsObject:update(world, dt)
+    GameObject.update(self, world, dt)
+    self:applyGravity(world, dt)
     self:applyVelocity(dt)
 end
 
-function PhysicsObject:applyGravity(dt)
-    self.velocity.y = self.velocity.y + 550 * dt
+function PhysicsObject:applyGravity(world, dt)
+    print(world.gravity)
+    self.velocity.y = self.velocity.y + world.gravity.y * dt
 end
 
 function PhysicsObject:applyVelocity(dt)
@@ -27,16 +28,21 @@ function PhysicsObject:applyVelocity(dt)
     self:translateY(self.velocity.y * dt)
 end
 
-function PhysicsObject:land()
+function PhysicsObject:land(world)
+    self.velocity.y = 0
+    self:emitSound(world)
+end
+
+function PhysicsObject:bumpHead(world)
     self.velocity.y = 0
 end
 
-function PhysicsObject:bumpHead()
-    self.velocity.y = 0
-end
-
-function PhysicsObject:hitWall()
+function PhysicsObject:hitWall(world)
     self.velocity.x = 0
+end
+
+function PhysicsObject:emitSound(world)
+    
 end
 
 function PhysicsObject:draw()

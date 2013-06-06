@@ -40,7 +40,7 @@ function Map:addTile(row, col)
 	self.tiles[row][col] = Tile:new(vector((col-1)*Tile.size.x, (row-1)*Tile.size.y))
 end
 
-function Map:update()
+function Map:update(world, dt)
 end
 
 function Map:draw()
