@@ -19,6 +19,8 @@ function Map:initializeTileMap()
 		self.tiles[row] = {}
 		for col=1,self.data.width do
 			tileData = self:findTileDataFor(row, col, tileLayer)
+
+			-- don't add tiles for empty spaces
 			if tileData ~= 0 then
 				self:addTile(row, col)
 			end

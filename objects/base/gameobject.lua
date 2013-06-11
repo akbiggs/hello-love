@@ -1,18 +1,24 @@
+nextID = 0
+
 -- CLASS
 GameObject = class("objects.base.GameObject")
 GameObject.should_draw_bbox = true
 
+-- STATIC PROPERTIES
+
+-- LOCAL PROPERTIES
+
 -- INITIALIZATION
 function GameObject:initialize(world, position, size, texture)
+    self.id = assignID()
     self.world = world
     self.bbox = BBox(self, position - size/2, size)
     self.texture = texture
-
 end
 
 -- POSITION GETTERS
 function GameObject:getCenter()
-    x, y = self.bbox:center()
+    local x, y = self.bbox:center()
     return vector(x, y)
 end
 

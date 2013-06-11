@@ -14,6 +14,7 @@ Player.maxJumps = 1
 
 -- INITIALIZATION
 function Player:initialize(world, position)
+	-- TODO: get texture for player
 	PhysicsObject.initialize(self, world, position, Player.size, nil)
 end
 

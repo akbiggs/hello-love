@@ -19,7 +19,7 @@ World.sounds = {}
 -- INITIALIZATION
 function World:initialize()
 	self:changeLevel("test")
-	table.insert(self.players, Player:new(self, vector(200, 100)))
+	self:add(Player:new(self, vector(200, 100)))
 end
 
 function World:changeLevel(levelName)
@@ -27,9 +27,8 @@ function World:changeLevel(levelName)
 end
 
 -- OBJECT OPERATIONS
-
 function World:generateSound(position, radius)
-	table.insert(self.sounds, Sound:new(self, position, radius))
+	self:add(Sound:new(self, position, radius))
 end
 
 function World:add(object)
@@ -37,7 +36,7 @@ function World:add(object)
 end
 
 function World:unbufferedAdd(object)
-	table.insert(self:findGroup(object), object)
+	self:findGroup(object)[object.id] = object
 end
 
 function World:remove(object)
@@ -45,7 +44,7 @@ function World:remove(object)
 end
 
 function World:unbufferedRemove(object)
-	table.remove(self:findGroup(object), object)
+	self:findGroup(object)[object.id] = nil
 end
 
 function World:findGroup(object)
@@ -73,27 +72,31 @@ function World:update(dt)
 end
 
 function World:updateGroup(group, dt)
-	__.each(group, function(object) object:update(dt) end)
+	for id,object in pairs(group) do
+		object:update(dt)
+	end
 end
 
 function World:flushBuffers()
-	__.each(self.addBuffer, self.unbufferedAdd)
-	__.each(self.removeBuffer, self.unbufferedRemove)
+	__.each(self.addBuffer, function(object) self:unbufferedAdd(object) end)
+	__.each(self.removeBuffer, function(object) self:unbufferedRemove(object) end)
+
+	self.addBuffer = {}
+	self.removeBuffer = {}
 end
 
 -- DRAW
 function World:draw()
-	love.graphics.setShader(nil)
 	self.map:draw()
 
 	self:drawGroup(self.players)
 	self:drawGroup(self.enemies)
 	self:drawGroup(self.bullets)
-	
-	love.graphics.setShader(rainbowGlow)	
 	self:drawGroup(self.sounds)
 end
 
 function World:drawGroup(group)
-	__.each(group, function(object) object:draw() end)
+	for id,object in pairs(group) do
+		object:draw()
+	end
 end

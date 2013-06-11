@@ -30,6 +30,7 @@ end
 
 -- COLLISIONS
 function PhysicsObject:land()
+    print("Landed")
     if self.velocity.y > 20 then
         self:emitSound(self.velocity.y)
     end
@@ -49,6 +50,4 @@ function PhysicsObject:emitSound(loudness)
 end
 
 -- DRAW
-function PhysicsObject:draw()
-    GameObject.draw(self)
-end
+
