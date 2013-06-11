@@ -1,5 +1,3 @@
-require "lib.middleclass"
-
 Collidable = {
 	canCollide = true,
     collide = function(self, other, dx, dy)

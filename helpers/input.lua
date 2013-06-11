@@ -1,12 +1,12 @@
-require "lib.middleclass"
-__ = require "lib.underscore"
-inspect = require "lib.inspect"
-
+-- CLASS
 Input = class("helpers.Input")
+
+-- STATIC PROPERTIES
 Input.static.keyStates = {
 	down = {}
 }
 
+-- METHODS
 function Input:anyKeyDown(keys)
 	return __.any(keys, function(key) return Input:isKeyDown(key) end)
 end

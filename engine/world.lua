@@ -1,9 +1,3 @@
--- IMPORTS
-require "lib.middleclass"
-require "objects.world.player"
-require "engine.map"
-local vector = require "lib.hump.vector"
-local inspect = require "lib.inspect"
 -- CLASS
 World = class("engine.World")
 
@@ -12,65 +6,94 @@ World = class("engine.World")
 -- LOCAL PROPERTIES
 World.gravity = vector(0, 400)
 
-World.bullets = {}
-World.player = nil
-World.enemies = {}
+World.addBuffer = {}
+World.removeBuffer = {}
+
 World.map = nil
+
+World.players = {}
+World.bullets = {}
+World.enemies = {}
+World.sounds = {}
 
 -- INITIALIZATION
 function World:initialize()
 	self:changeLevel("test")
-	self.player = Player:new(vector(200, 100))
+	table.insert(self.players, Player:new(self, vector(200, 100)))
 end
 
 function World:changeLevel(levelName)
-	self.map = Map:new(levelName)
+	self.map = Map:new(self, levelName)
+end
+
+-- OBJECT OPERATIONS
+
+function World:generateSound(position, radius)
+	table.insert(self.sounds, Sound:new(self, position, radius))
+end
+
+function World:add(object)
+	table.insert(self.addBuffer, object)
+end
+
+function World:unbufferedAdd(object)
+	table.insert(self:findGroup(object), object)
+end
+
+function World:remove(object)
+	table.insert(self.removeBuffer, object) 
+end
+
+function World:unbufferedRemove(object)
+	table.remove(self:findGroup(object), object)
+end
+
+function World:findGroup(object)
+	if instanceOf(Bullet, object) then 
+		return self.bullets
+	elseif instanceOf(Player, object) then
+		return self.players
+	elseif instanceOf(Enemy, object) then 
+		return self.enemies
+	elseif instanceOf(Sound, object) then 
+		return self.sounds
+	end
 end
 
 -- UPDATE
 function World:update(dt)
-	self:updateMap(dt)
-	self:updatePlayer(dt)
-	self:updateBullets(dt)
-	self:updateEnemies(dt)
+	self.map:update()
+
+	self:updateGroup(self.players, dt)
+	self:updateGroup(self.bullets, dt)
+	self:updateGroup(self.enemies, dt)
+	self:updateGroup(self.sounds, dt)
+
+	self:flushBuffers()
 end
 
-function World:updateMap(dt)
-	self.map:update(self, dt)
+function World:updateGroup(group, dt)
+	__.each(group, function(object) object:update(dt) end)
 end
 
-function World:updatePlayer(dt)
-	self.player:update(self, dt)
-end
-
-function World:updateBullets(dt)
-	for i,bullet in ipairs(self.bullets) do
-		bullet:update(self, dt)
-	end
-end
-
-function World:updateEnemies(dt)
-	for i,enemy in ipairs(self.enemies) do
-		enemy:update(self, dt)
-	end
+function World:flushBuffers()
+	__.each(self.addBuffer, self.unbufferedAdd)
+	__.each(self.removeBuffer, self.unbufferedRemove)
 end
 
 -- DRAW
 function World:draw()
+	love.graphics.setShader(nil)
 	self.map:draw()
-	self.player:draw()
-	self:drawEnemies()
-	self:drawBullets()
+
+	self:drawGroup(self.players)
+	self:drawGroup(self.enemies)
+	self:drawGroup(self.bullets)
+	
+	love.graphics.setShader(rainbowGlow)	
+	self:drawGroup(self.sounds)
 end
 
-function World:drawEnemies()
-	for i,enemy in ipairs(self.enemies) do
-		enemy:draw()
-	end
-end
-
-function World:drawBullets()
-	for i,bullet in ipairs(self.bullets) do
-		bullet:draw()
-	end
+function World:drawGroup(group)
+	__.each(group, function(object) object:draw() end)
 end

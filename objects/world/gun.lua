@@ -1,7 +1,3 @@
--- IMPORTS
-require "lib.middleclass"
-vector = require "lib.hump.vector"
-
 -- CLASS
 Gun = class("objects.world.Gun", GameObject)
 
@@ -11,11 +7,11 @@ Gun = class("objects.world.Gun", GameObject)
 Gun.canFire = true
 
 -- INITIALIZATION
-function Gun:initialize(position, size, texture, reload_time, bulletClass)
+function Gun:initialize(world, position, size, texture, reload_time, bulletClass)
 	self.reload_time = reload_time
 	self.bulletClass = bulletClass
 
-	GameObject.initialize(self, position, size, texture)
+	GameObject.initialize(self, world, position, size, texture)
 end
 
 -- UPDATE
@@ -24,8 +20,7 @@ function Gun:update(dt)
 end
 
 function Gun:fire()
-	if ()
-	return self.bulletClass:new(position, vector(10, 10))
+	self.world:addBullet(self.bulletClass:new(position, vector(10, 10)))
 end
 
 function Gun:canFire()

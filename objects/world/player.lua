@@ -1,25 +1,24 @@
-require "lib.middleclass"
-require "objects.base.physicsobject"
-require "helpers.input"
-
-vector = require "lib.hump.vector"
-inspect = require "lib.inspect"
-
+-- CLASS
 Player = class("objects.world.Player", PhysicsObject)
+
+-- STATIC PROPERTIES
 Player.static.size = vector(32, 64)
 
 Player.static.left_keys = {"left", "A"}
 Player.static.right_keys = {"right", "D"}
 Player.static.jump_keys = {"up", "space"}
 
+-- LOCAL PROPERTIES
 Player.numJumps = 0
 Player.maxJumps = 1
 
-function Player:initialize(position)
-	PhysicsObject.initialize(self, position, Player.size, nil)
+-- INITIALIZATION
+function Player:initialize(world, position)
+	PhysicsObject.initialize(self, world, position, Player.size, nil)
 end
 
-function Player:update(world, dt)
+-- UPDATE
+function Player:update(dt)
 	if self.velocity.y > 50 then
 		self:fall(dt)
 	end
@@ -34,9 +33,10 @@ function Player:update(world, dt)
 		self:jump(dt)
 	end
 
-	PhysicsObject.update(self, world, dt)
+	PhysicsObject.update(self, dt)
 end
 
+-- MOVEMENT
 function Player:moveLeft(dt)
 	self:move(-1, dt)
 end
@@ -62,3 +62,5 @@ function Player:jump(dt)
 	self.velocity.y = -350
 	self.numJumps = self.numJumps + 1
 end
+
+-- DRAW

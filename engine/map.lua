@@ -1,11 +1,10 @@
-require "lib.middleclass"
-require "objects.world.tile"
-local vector = require "lib.hump.vector"
-
+-- CLASS
 Map = class("engine.Map")
 Map.tiles = {}
 
-function Map:initialize(mapName)
+-- INITIALIZATION
+function Map:initialize(world, mapName)
+	self.world = world
 	self.data = loadMapFromFile(mapName)
 	self:initializeTileMap()
 end
@@ -27,6 +26,7 @@ function Map:initializeTileMap()
 	end
 end
 
+-- TILE OPERATIONS
 function Map:getTileLayer()
 	return self.data.layers[1]
 end
@@ -37,12 +37,15 @@ function Map:findTileDataFor(row, col, tileLayer)
 end
 
 function Map:addTile(row, col)
-	self.tiles[row][col] = Tile:new(vector((col-1)*Tile.size.x, (row-1)*Tile.size.y))
+	self.tiles[row][col] = Tile:new(self.world, 
+		vector((col-1)*Tile.size.x, (row-1)*Tile.size.y))
 end
 
+-- UPDATE
 function Map:update(world, dt)
 end
 
+-- DRAW
 function Map:draw()
 	for i,row in pairs(self.tiles) do
 		for j,tile in pairs(row) do

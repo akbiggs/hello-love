@@ -1,34 +1,30 @@
-require "lib.middleclass"
-require "engine.bbox"
-require "objects.behaviors.collidable"
-local inspect = require "lib.inspect"
-
+-- CLASS
 GameObject = class("objects.base.GameObject")
 GameObject.should_draw_bbox = true
 
-function GameObject:initialize(position, size, texture)
+-- INITIALIZATION
+function GameObject:initialize(world, position, size, texture)
+    self.world = world
+    self.bbox = BBox(self, position - size/2, size)
     self.texture = texture
 
-    self.bbox = BBox(self, position - size/2, size)
 end
 
+-- POSITION GETTERS
 function GameObject:getCenter()
-    return self.bbox:center()
+    x, y = self.bbox:center()
+    return vector(x, y)
 end
 
 function GameObject:getX()
-    x, _ = self:getCenter()
-    return x
+    return self:getCenter().x
 end
 
 function GameObject:getY()
-    _, y = self:getCenter()
-    return y
+    return self:getCenter().y
 end
 
-function GameObject:update(world, dt)
-end
-
+-- POSITION SETTERS
 function GameObject:moveTo(x, y)
     self.bbox:moveTo(x, y)
 end
@@ -45,6 +41,11 @@ function GameObject:translateY(delta)
     self:translate(0, delta)
 end
 
+-- UPDATE
+function GameObject:update(dt)
+end
+
+-- DRAW
 function GameObject:draw()
     if self.should_draw_bbox then
         self.bbox:draw("fill")

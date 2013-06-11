@@ -1,25 +1,26 @@
-local vector = require "lib.hump.vector"
-require "lib.middleclass"
-require "objects.base.gameobject"
-require "objects.behaviors.collidable"
-
+-- CLASS
 PhysicsObject = class("objects.base.PhysicsObject", GameObject)
 PhysicsObject:include(Collidable)
 
+-- STATIC PROPERTIES
+
+-- LOCAL PROPERTIES
 PhysicsObject.velocity = vector(0, 0)
 
-function PhysicsObject:initialize(position, size, texture)
-    GameObject.initialize(self, position, size, texture)
+-- INITIALIZATION
+function PhysicsObject:initialize(world, position, size, texture)
+    GameObject.initialize(self, world, position, size, texture)
 end
 
-function PhysicsObject:update(world, dt)
-    GameObject.update(self, world, dt)
-    self:applyGravity(world, dt)
+-- UPDATE
+function PhysicsObject:update(dt)
+    GameObject.update(self, dt)
+    self:applyGravity(dt)
     self:applyVelocity(dt)
 end
 
-function PhysicsObject:applyGravity(world, dt)
-    self.velocity.y = self.velocity.y + world.gravity.y * dt
+function PhysicsObject:applyGravity(dt)
+    self.velocity.y = self.velocity.y + self.world.gravity.y * dt
 end
 
 function PhysicsObject:applyVelocity(dt)
@@ -27,23 +28,27 @@ function PhysicsObject:applyVelocity(dt)
     self:translateY(self.velocity.y * dt)
 end
 
-function PhysicsObject:land(world)
+-- COLLISIONS
+function PhysicsObject:land()
+    if self.velocity.y > 20 then
+        self:emitSound(self.velocity.y)
+    end
     self.velocity.y = 0
-    self:emitSound(world)
 end
 
-function PhysicsObject:bumpHead(world)
+function PhysicsObject:bumpHead()
     self.velocity.y = 0
 end
 
-function PhysicsObject:hitWall(world)
+function PhysicsObject:hitWall()
     self.velocity.x = 0
 end
 
-function PhysicsObject:emitSound(world)
-    
+function PhysicsObject:emitSound(loudness)
+    self.world:generateSound(self:getCenter(), loudness)
 end
 
+-- DRAW
 function PhysicsObject:draw()
     GameObject.draw(self)
 end

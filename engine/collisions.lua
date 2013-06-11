@@ -1,5 +1,3 @@
-Collider = require "lib.hardon"
- 
 -- HARDON CALLBACKS
 function onCollide(dt, shape_a, shape_b, dx, dy)
     ax, ay = shape_a:center()
@@ -13,6 +11,3 @@ function handleCollision(obj, other, dx, dy)
 		obj:collide(other, dx, dy)
 	end
 end
-
--- STATIC
-HC = Collider(10, onCollide)
