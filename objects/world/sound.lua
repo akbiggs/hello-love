@@ -1,18 +1,22 @@
 -- CLASS
 Sound = class("objects.world.Sound", GameObject)
 
--- LOCAL PROPERTIES
+-- STATIC PROPERTIES
+Sound.static.INITIAL_GROWTH_SPEED = 400
+Sound.static.MIN_GROWTH_SPEED = 20
 
+-- LOCAL PROPERTIES
 
 -- INITIALIZATION
 function Sound:initialize(world, position, radius)
 	self.id = assignID()
 	self.world = world
 	self.position = position
+
 	self.maxRadius = radius
 	self.curRadius = 1
+
 	self.color = Color:new(0, 0, 127, 255)
-	self.fadeSpeed = 150
 end
 
 -- UPDATE
@@ -22,7 +26,7 @@ function Sound:update(dt)
 end
 
 function Sound:fade(dt)
-	self.color.a = self.color.a - self.fadeSpeed * dt
+	self.color.a = math.lerp(255, 0, self.curRadius / self.maxRadius)
 	if self:fadedOut() then
 		self.world:remove(self)
 	end
@@ -33,7 +37,12 @@ function Sound:fadedOut()
 end
 
 function Sound:grow(dt)
-	self.curRadius = self.curRadius + 100 * dt
+	self.curRadius = self.curRadius + self:getGrowthSpeed() * dt
+end
+
+function Sound:getGrowthSpeed()
+	return math.lerp(Sound.INITIAL_GROWTH_SPEED, Sound.MIN_GROWTH_SPEED, 
+		self.curRadius / self.maxRadius)
 end
 
 -- DRAW

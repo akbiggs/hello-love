@@ -31,7 +31,7 @@ end
 -- COLLISIONS
 function PhysicsObject:land()
     if self.velocity.y > 20 then
-        self:emitSound(self.velocity.y)
+        self:emitSound(self.velocity.y/2)
     end
     self.velocity.y = 0
 end
@@ -45,7 +45,7 @@ function PhysicsObject:hitWall()
 end
 
 function PhysicsObject:emitSound(loudness)
-    self.world:generateSound(self:getCenter(), loudness)
+    self.world:generateSound(self:getBottom(), loudness)
 end
 
 -- DRAW

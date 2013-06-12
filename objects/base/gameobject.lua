@@ -12,6 +12,8 @@ GameObject.should_draw_bbox = true
 function GameObject:initialize(world, position, size, texture)
     self.id = assignID()
     self.world = world
+    self.position = position
+    self.size = size
     self.bbox = BBox(self, position - size/2, size)
     self.texture = texture
 end
@@ -20,6 +22,10 @@ end
 function GameObject:getCenter()
     local x, y = self.bbox:center()
     return vector(x, y)
+end
+
+function GameObject:getBottom()
+    return self:getCenter() + vector(0, self.size.y/2)
 end
 
 function GameObject:getX()

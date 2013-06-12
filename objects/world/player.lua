@@ -2,7 +2,7 @@
 Player = class("objects.world.Player", PhysicsObject)
 
 -- STATIC PROPERTIES
-Player.static.size = vector(32, 64)
+Player.static.size = vector(32, 32)
 
 Player.static.left_keys = {"left", "A"}
 Player.static.right_keys = {"right", "D"}

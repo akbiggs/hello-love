@@ -22,6 +22,7 @@ require "engine.world"
 -- HELPERS
 require "helpers.input"
 require "helpers.graphics"
+require "helpers.math"
 
 -- OBJECTS
 require "objects.behaviors.collidable"

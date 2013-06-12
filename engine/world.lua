@@ -4,7 +4,7 @@ World = class("engine.World")
 -- STATIC PROPERTIES
 
 -- LOCAL PROPERTIES
-World.gravity = vector(0, 400)
+World.gravity = vector(0, 500)
 
 World.addBuffer = {}
 World.removeBuffer = {}
