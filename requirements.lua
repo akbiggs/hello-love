@@ -1,14 +1,16 @@
 g = love.graphics
 
-
 -- LIB
 require "lib.middleclass"
 require "lib.stateful"
+
 __ = require "lib.underscore"
 lick = require "lib.lick"
 inspect = require "lib.inspect"
-vector = require "lib.hump.vector"
 Collider = require "lib.hardon"
+
+vector = require "lib.hump.vector"
+Timer = require "lib.hump.timer"
 
 -- ENGINE
 require "engine.effects"

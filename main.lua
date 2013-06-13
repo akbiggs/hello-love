@@ -11,6 +11,7 @@ end
 
 function love.update(dt)
     HC:update(dt)
+    Timer.update(dt)
     world:update(dt)
 end 
 

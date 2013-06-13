@@ -6,28 +6,24 @@ Input.static.keyStates = {
 	down = {}
 }
 
--- METHODS
+-- KEY DOWN METHODS
 function Input:anyKeyDown(keys)
 	return __.any(keys, function(key) return Input:isKeyDown(key) end)
 end
 
 function Input:isKeyDown(key)
-	if love.keyboard.isDown(key) then
-		if Input:previouslyReleased(key) then
-			Input:onKeyTapped(key)
-		end
-		return true
-	end
-
-	return false
+	-- order is important here, for now. Need to trigger onKeyTapped method
+	-- from isKeyTapped to get thngs to work properly.
+	return Input:isKeyTapped(key) or love.keyboard.isDown(key)
 end
 
+-- KEY TAPPED METHODS
 function Input:anyKeyTapped(keys)
 	return __.any(keys, function(key) return Input:isKeyTapped(key) end)
 end
 
 function Input:isKeyTapped(key)
-	if (love.keyboard.isDown(key) and Input:previouslyReleased(key)) then
+	if (love.keyboard.isDown(key) and Input:isPreviouslyReleased(key)) then
 		Input:onKeyTapped(key)
 		return true
 	end
@@ -39,10 +35,21 @@ function Input:onKeyTapped(key)
 	Input.keyStates.down[key] = true
 end
 
+-- KEY RELEASED METHODS
+function Input:anyKeyReleased(keys)
+	return __.any(keys, function(key) return Input:isKeyReleased(key) end)
+end
+
+function Input:isKeyReleased(key)
+	return not love.keyboard.isDown(key)
+end
+
 function Input:onKeyReleased(key)
 	Input.keyStates.down[key] = false
 end
 
-function Input:previouslyReleased(key)
+function Input:isPreviouslyReleased(key)
+	-- TODO: Keep track of previous key state for multiple
+	-- listeners on same key tapped event
 	return not Input.keyStates.down[key]
 end
