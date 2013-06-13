@@ -67,7 +67,7 @@ function Player:reactToInput(dt)
 	end
 end
 
--- MOVEMENT
+-- BASIC MOVEMENT
 function Player:moveLeft(dt)
 	self.lastDirection = -1
 	self:move(self.lastDirection, dt)
@@ -82,6 +82,7 @@ function Player:move(direction, dt)
 	self:translateX(direction * self.speed * dt)
 end
 
+-- DASHING
 function Player:dash()
 	self.speed = self.dashSpeed
 	self.dashTimer = Timer.add(1, function() self:endDash() end)
@@ -95,6 +96,7 @@ function Player:isDashing()
 	return self.speed > self.normalSpeed
 end
 
+-- AERIAL MOVEMENT
 function Player:fall(dt)
 	self.numJumps = math.max(self.numJumps, 1)
 end
