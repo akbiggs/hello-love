@@ -41,7 +41,6 @@ function Player:update(dt)
 		self:reactToInput(dt)
 	else
 		if Input:anyKeyReleased(Player.dashKeys) then
-			Timer.cancel(self.dashTimer)
 			self:endDash()
 		else
 			self:move(self.lastDirection, dt)
@@ -89,6 +88,9 @@ function Player:dash()
 end
 
 function Player:endDash()
+	if self.dashTimer then
+		Timer.cancel(self.dashTimer)
+	end
 	self.speed = self.normalSpeed
 end
 

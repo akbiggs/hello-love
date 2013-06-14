@@ -16,7 +16,11 @@ function Sound:initialize(world, position, radius)
 	self.maxRadius = radius
 	self.curRadius = 1
 
-	self.color = Color:new(0, 0, 127, 255)
+	self.style = Style:new({
+		color = Color:new(0, 0, 127, 255),
+		shader = rainbowGlow, 
+		lineWidth = 4
+	})
 end
 
 -- UPDATE
@@ -26,14 +30,14 @@ function Sound:update(dt)
 end
 
 function Sound:fade(dt)
-	self.color.a = math.lerp(255, 0, self.curRadius / self.maxRadius)
+	self.style.color.a = math.lerp(255, 0, self.curRadius / self.maxRadius)
 	if self:fadedOut() then
 		self.world:remove(self)
 	end
 end
 
 function Sound:fadedOut()
-	return self.color.a <= 0
+	return self.style.color.a <= 0
 end
 
 function Sound:grow(dt)
@@ -47,11 +51,9 @@ end
 
 -- DRAW
 function Sound:draw()
-	g.pushStyle()
+	g.pushStyle(self.style)
 
-	love.graphics.setColor(self.color.r, self.color.g, self.color.b, self.color.a)
-	love.graphics.setShader(rainbowGlow)
-	love.graphics.circle("line", self.position.x, self.position.y, self.curRadius, 100)
+	g.circle("line", self.position.x, self.position.y, self.curRadius, 100)
 
 	g.popStyle()
 end

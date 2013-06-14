@@ -13,7 +13,7 @@ end
 
 function Input:isKeyDown(key)
 	-- order is important here, for now. Need to trigger onKeyTapped method
-	-- from isKeyTapped to get thngs to work properly.
+	-- from isKeyTapped so isPreviouslyReleased 
 	return Input:isKeyTapped(key) or love.keyboard.isDown(key)
 end
 

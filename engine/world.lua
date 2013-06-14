@@ -18,7 +18,7 @@ World.sounds = {}
 
 -- INITIALIZATION
 function World:initialize()
-	self:changeLevel("test")
+	self:changeLevel("level1")
 	self:add(Player:new(self, vector(200, 100)))
 end
 
@@ -31,6 +31,9 @@ function World:generateSound(position, radius)
 	self:add(Sound:new(self, position, radius))
 end
 
+-- a normal operation will wait until the end of the update
+-- cycle before executing, an unbuffered will not. Prevents
+-- adding/removing objects while iterating.
 function World:add(object)
 	table.insert(self.addBuffer, object)
 end
