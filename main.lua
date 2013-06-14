@@ -6,6 +6,10 @@ local world = nil
 
 -- LOVE CALLBACKS
 function love.load()
+	love.window.setMode(1280, 800, {
+		fullscreen = true
+	})
+
     world = World:new()
 end
 
