@@ -9,12 +9,12 @@ GameObject.should_draw_bbox = true
 -- LOCAL PROPERTIES
 
 -- INITIALIZATION
-function GameObject:initialize(world, position, size, texture)
+function GameObject:initialize(world, center, size, texture)
     self.id = assignID()
     self.world = world
-    self.position = position
+    self.position = center
     self.size = size
-    self.bbox = BBox(self, position - size/2, size)
+    self.bbox = BBox(self, center - size/2, size)
     self.texture = texture
 end
 

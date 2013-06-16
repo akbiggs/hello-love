@@ -6,6 +6,7 @@ Map.tiles = {}
 function Map:initialize(world, mapName)
 	self.world = world
 	self.data = loadMapFromFile(mapName)
+	self.columnColliders = {}
 	self:initializeTileMap()
 end
 
@@ -15,17 +16,43 @@ end
 
 function Map:initializeTileMap()
 	tileLayer = self:getTileLayer()
+
+	-- collision boxes are done by columns of tiles as opposed to
+	-- on an individual basis to avoid collision errors
+	local colliderTileHeights = {}
+	for i=1,self.data.width do
+		colliderTileHeights[i] = 0
+	end
+
 	for row=1,self.data.height do
 		self.tiles[row] = {}
 		for col=1,self.data.width do
+
 			tileData = self:findTileDataFor(row, col, tileLayer)
 
-			-- don't add tiles for empty spaces
 			if tileData ~= 0 then
+				colliderTileHeights[col] = colliderTileHeights[col] + 1
 				self:addTile(row, col)
+
+				if row == self.data.height and colliderTileHeights[col] ~= 0 then
+					self:addColumn(row, col, colliderTileHeights)
+				end
+			else
+				if colliderTileHeights[col] ~= 0 then
+					self:addColumn(row, col, colliderTileHeights)
+				end
+				colliderTileHeights[col] = 0
 			end
 		end
 	end
+end
+
+function Map:addColumn(startRow, col, colliderTileHeights)
+	local tilePosition = vector((col-1)*Tile.size.x, (startRow-colliderTileHeights[col])*Tile.size.y)
+	local tileSize = vector(Tile.size.x, Tile.size.y*colliderTileHeights[col])
+
+	table.insert(self.columnColliders, GameObject:new(self.world, tilePosition + tileSize/2, 
+		tileSize, nil))
 end
 
 -- TILE OPERATIONS
@@ -51,7 +78,13 @@ end
 function Map:draw()
 	for i,row in pairs(self.tiles) do
 		for j,tile in pairs(row) do
-			tile:draw()
+			--tile:draw()
 		end
+	end
+
+	-- for now, draw the colliders before we have rendering the 
+	-- tilemap working
+	for k,collider in pairs(self.columnColliders) do
+		collider:draw()
 	end
 end

@@ -1,6 +1,6 @@
-BBox = function(parent, position, size)
+BBox = function(parentObject, position, size)
     box = HC:addRectangle(position.x, position.y, size.x, size.y)
-    box.parent = parent
+    box.parent = parentObject
     return box
 end
 	
