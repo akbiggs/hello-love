@@ -19,9 +19,10 @@ function Map:initializeTileMap()
 
 	-- collision boxes are done by columns of tiles as opposed to
 	-- on an individual basis to avoid collision errors
-	local colliderTileHeights = {}
+	-- TODO: refactor for clarity
+	local columnHeights = {}
 	for i=1,self.data.width do
-		colliderTileHeights[i] = 0
+		columnHeights[i] = 0
 	end
 
 	for row=1,self.data.height do
@@ -31,25 +32,25 @@ function Map:initializeTileMap()
 			tileData = self:findTileDataFor(row, col, tileLayer)
 
 			if tileData ~= 0 then
-				colliderTileHeights[col] = colliderTileHeights[col] + 1
+				columnHeights[col] = columnHeights[col] + 1
 				self:addTile(row, col)
 
-				if row == self.data.height and colliderTileHeights[col] ~= 0 then
-					self:addColumn(row, col, colliderTileHeights)
+				if row == self.data.height and columnHeights[col] ~= 0 then
+					self:addColumn(row, col, columnHeights)
 				end
 			else
-				if colliderTileHeights[col] ~= 0 then
-					self:addColumn(row, col, colliderTileHeights)
+				if columnHeights[col] ~= 0 then
+					self:addColumn(row, col, columnHeights)
 				end
-				colliderTileHeights[col] = 0
+				columnHeights[col] = 0
 			end
 		end
 	end
 end
 
 function Map:addColumn(startRow, col, colliderTileHeights)
-	local tilePosition = vector((col-1)*Tile.size.x, (startRow-colliderTileHeights[col])*Tile.size.y)
-	local tileSize = vector(Tile.size.x, Tile.size.y*colliderTileHeights[col])
+	local tilePosition = vector((col-1)*Tile.SIZE.x, (startRow-colliderTileHeights[col])*Tile.SIZE.y)
+	local tileSize = vector(Tile.SIZE.x, Tile.SIZE.y*colliderTileHeights[col])
 
 	table.insert(self.columnColliders, GameObject:new(self.world, tilePosition + tileSize/2, 
 		tileSize, nil))
@@ -67,11 +68,11 @@ end
 
 function Map:addTile(row, col)
 	self.tiles[row][col] = Tile:new(self.world, 
-		vector((col-1)*Tile.size.x, (row-1)*Tile.size.y))
+		vector((col-1)*Tile.SIZE.x, (row-1)*Tile.SIZE.y))
 end
 
 -- UPDATE
-function Map:update(world, dt)
+function Map:update(dt)
 end
 
 -- DRAW
