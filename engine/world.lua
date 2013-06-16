@@ -51,10 +51,10 @@ function World:unbufferedRemove(object)
 end
 
 function World:findGroup(object)
-	if instanceOf(Bullet, object) then 
-		return self.bullets
-	elseif instanceOf(Player, object) then
+	if instanceOf(Player, object) then
 		return self.players
+	elseif instanceOf(Bullet, object) then 
+		return self.bullets
 	elseif instanceOf(Enemy, object) then 
 		return self.enemies
 	elseif instanceOf(Sound, object) then 

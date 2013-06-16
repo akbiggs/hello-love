@@ -25,5 +25,5 @@ function love.draw()
 end
 
 function love.keyreleased(key)
-    Input:onKeyReleased(key)
+    Input.onKeyReleased(key)
 end

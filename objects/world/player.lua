@@ -1,18 +1,23 @@
 -- CLASS
 Player = class("objects.world.Player", PhysicsObject)
+Player:include(Gunner)
 
 -- STATIC PROPERTIES
-Player.static.size = vector(32, 32)
+Player.static.SIZE = vector(32, 32)
 
-Player.static.leftKeys = {"left", "A"}
-Player.static.rightKeys = {"right", "D"}
-Player.static.jumpKeys = {"up", "space"}
-Player.static.dashKeys = {"x"}
+Player.static.LEFT_KEYS = {"left", "A"}
+Player.static.RIGHT_KEYS = {"right", "D"}
+Player.static.JUMP_KEYS = {"up", "space", "z"}
+Player.static.FIRE_KEYS = {"x"}
+Player.static.DASH_KEYS = {"c"}
 
 -- LOCAL PROPERTIES
 
 -- INITIALIZATION
 function Player:initialize(world, position)
+	-- TODO: get texture for player
+	PhysicsObject.initialize(self, world, position, Player.SIZE, nil)
+
 	self.numJumps = 0
 	self.maxJumps = 1
 
@@ -26,13 +31,19 @@ function Player:initialize(world, position)
 
 	self.speed = self.normalSpeed
 	self.dashTimer = nil
-
-	-- TODO: get texture for player
-	PhysicsObject.initialize(self, world, position, Player.size, nil)
+	
+	self:changeGun(LaserRifle)
 end
 
 -- UPDATE
 function Player:update(dt)
+	self:updateMovement(dt)
+	self:updateGun(dt)
+
+	PhysicsObject.update(self, dt)
+end
+
+function Player:updateMovement(dt)
 	if self.velocity.y > self.fallSpeed then
 		self:fall(dt)
 	end
@@ -40,29 +51,34 @@ function Player:update(dt)
 	if not self:isDashing() then
 		self:reactToInput(dt)
 	else
-		if Input:anyKeyReleased(Player.dashKeys) then
+		if Input.anyKeyReleased(Player.DASH_KEYS) then
 			self:endDash()
 		else
 			self:move(self.lastDirection, dt)
 		end
 	end
-
-	PhysicsObject.update(self, dt)
 end
 
 function Player:reactToInput(dt)
-	if Input:anyKeyDown(Player.leftKeys) then
+	if Input.anyKeyDown(Player.LEFT_KEYS) then
 		self:moveLeft(dt)
-	elseif Input:anyKeyDown(Player.rightKeys) then
+	elseif Input.anyKeyDown(Player.RIGHT_KEYS) then
 		self:moveRight(dt)
 	end
 
-	if Input:anyKeyTapped(Player.dashKeys) then
+	if Input.anyKeyTapped(Player.DASH_KEYS) then
 		self:dash()
 	end
 
-	if Input:anyKeyTapped(Player.jumpKeys) and self.numJumps < self.maxJumps then
+	if Input.anyKeyTapped(Player.JUMP_KEYS) and self.numJumps < self.maxJumps then
 		self:jump(dt)
+	end
+end
+
+function Player:updateGun(dt)
+	self.gun:update(dt)
+	if Input.anyKeyDown(Player.FIRE_KEYS) then
+		self:fireGun()
 	end
 end
 
@@ -82,7 +98,7 @@ function Player:move(direction, dt)
 end
 
 -- DASHING
-function Player:dash()
+function Player:dash(dt)
 	self.speed = self.dashSpeed
 	self.dashTimer = Timer.add(1, function() self:endDash() end)
 end

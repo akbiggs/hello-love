@@ -52,8 +52,9 @@ function Map:addColumn(startRow, col, colliderTileHeights)
 	local tilePosition = vector((col-1)*Tile.SIZE.x, (startRow-colliderTileHeights[col])*Tile.SIZE.y)
 	local tileSize = vector(Tile.SIZE.x, Tile.SIZE.y*colliderTileHeights[col])
 
-	table.insert(self.columnColliders, GameObject:new(self.world, tilePosition + tileSize/2, 
-		tileSize, nil))
+	local columnCollider = GameObject:new(self.world, tilePosition + tileSize/2, tileSize, nil)
+	columnCollider.isLandscape = true
+	table.insert(self.columnColliders, columnCollider)
 end
 
 -- TILE OPERATIONS
@@ -67,7 +68,7 @@ function Map:findTileDataFor(row, col, tileLayer)
 end
 
 function Map:addTile(row, col)
-	self.tiles[row][col] = Tile:new(self.world, 
+	self.tiles[row][col] = Tile:new(self.world,
 		vector((col-1)*Tile.SIZE.x, (row-1)*Tile.SIZE.y))
 end
 

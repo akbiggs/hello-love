@@ -37,12 +37,13 @@ function GameObject:getY()
 end
 
 -- POSITION SETTERS
-function GameObject:moveTo(x, y)
-    self.bbox:moveTo(x, y)
+function GameObject:moveTo(position)
+    self.position = position
+    self.bbox:moveTo(position.x, position.y)
 end
 
 function GameObject:translate(dx, dy)
-    self.bbox:moveTo(self:getX() + dx, self:getY() + dy)
+    self:moveTo(vector(self:getX() + dx, self:getY() + dy))
 end
 
 function GameObject:translateX(delta)
