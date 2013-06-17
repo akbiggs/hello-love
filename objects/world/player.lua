@@ -72,6 +72,8 @@ function Player:reactToInput(dt)
 
 	if Input.anyKeyTapped(Player.JUMP_KEYS) and self.numJumps < self.maxJumps then
 		self:jump(dt)
+	elseif self:isJumping() and Input.allKeysReleased(Player.JUMP_KEYS) then
+		self.velocity.y = math.max(self.velocity.y, -100)
 	end
 end
 
@@ -130,6 +132,10 @@ end
 function Player:jump(dt)
 	self.velocity.y = -self.jumpSpeed
 	self.numJumps = self.numJumps + 1
+end
+
+function Player:isJumping()
+	return self.velocity.y < 0
 end
 
 -- DRAW

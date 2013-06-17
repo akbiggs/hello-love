@@ -54,6 +54,7 @@ function Map:addColumn(startRow, col, colliderTileHeights)
 
 	local columnCollider = GameObject:new(self.world, tilePosition + tileSize/2, tileSize, nil)
 	columnCollider.isLandscape = true
+	HC:setPassive(columnCollider.bbox)
 	table.insert(self.columnColliders, columnCollider)
 end
 

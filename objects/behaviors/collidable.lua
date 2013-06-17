@@ -1,18 +1,10 @@
 Collidable = {
 	canCollide = true,
     collide = function(self, other, dx, dy)
-        if other.isLandscape then
-            self:translate(dx, dy)
-
-            if dy < 0 and self.velocity.y > 0 then
-                self:land()
-            elseif dy > 0 and self.velocity.y < 0 then
-                self:bumpHead()
-            end
-
-    	    if dx ~= 0 then
-    	    	self:hitWall()
-            end
+        if other.isLandscape and (dx ~= 0 or dy ~= 0) then
+            self:collideWithLandscape(dx, dy)
         end
-    end
+    end;
+
+    collideWithLandscape = function(self, dx, dy) end;
 }

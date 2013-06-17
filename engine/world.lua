@@ -47,6 +47,7 @@ function World:remove(object)
 end
 
 function World:unbufferedRemove(object)
+	HC:remove(object.bbox)
 	self:findGroup(object)[object.id] = nil
 end
 

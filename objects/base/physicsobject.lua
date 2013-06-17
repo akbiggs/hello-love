@@ -29,6 +29,21 @@ function PhysicsObject:applyVelocity(dt)
 end
 
 -- COLLISIONS
+
+function PhysicsObject:collideWithLandscape(dx, dy)
+    self:translate(dx, dy)
+
+    if dy < 0 and self.velocity.y > 0 then
+        self:land()
+    elseif dy > 0 and self.velocity.y < 0 then
+        self:bumpHead()
+    end
+
+    if dx ~= 0 then
+        self:hitWall()
+    end
+end
+
 function PhysicsObject:land()
     if self.velocity.y > 20 then
         self:emitSound(self.velocity.y/2)

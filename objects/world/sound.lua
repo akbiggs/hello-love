@@ -1,10 +1,11 @@
 -- CLASS
-Sound = class("objects.world.Sound", GameObject)
+Sound = class("objects.world.Sound")
 
 -- STATIC PROPERTIES
 Sound.static.INITIAL_GROWTH_SPEED = 800
 Sound.static.MIN_GROWTH_SPEED = 20
-Sound.static.START_ALPHA = 127
+Sound.static.START_ALPHA = 150
+
 -- LOCAL PROPERTIES
 
 -- INITIALIZATION

@@ -40,6 +40,10 @@ function Input.anyKeyReleased(keys)
 	return __.any(keys, function(key) return Input.isKeyReleased(key) end)
 end
 
+function Input.allKeysReleased(keys)
+	return __.all(keys, function(key) return Input.isKeyReleased(key) end)
+end
+
 function Input.isKeyReleased(key)
 	return not love.keyboard.isDown(key)
 end
