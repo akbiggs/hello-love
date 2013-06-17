@@ -77,6 +77,9 @@ end
 
 function Player:updateGun(dt)
 	self.gun:update(dt)
+	self.gun:rotateAbsolute(math.getAngle(love.mouse.getPosition(), self.position))
+	self.gun:rotateAbsolute(math.getAngle(self.position, love.mouse.getPosition()))
+
 	if Input.anyKeyDown(Player.FIRE_KEYS) then
 		self:fireGun()
 	end

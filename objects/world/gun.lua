@@ -1,5 +1,6 @@
 -- CLASS
 Gun = class("objects.world.Gun", GameObject)
+Gun:include(Rotatable)
 
 -- STATIC PROPERTIES
 
@@ -34,7 +35,7 @@ end
 
 -- FIRING
 function Gun:fire()
-	self.world:add(self.bulletClass:new(self.world, self.position, vector(10, 10), nil, 0))
+	self.world:add(self.bulletClass:new(self.world, self.position, math.angleToDirection(self.angle)))
 	self:reload()
 end
 

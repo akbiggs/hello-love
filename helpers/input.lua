@@ -53,3 +53,10 @@ function Input.isPreviouslyReleased(key)
 	-- listeners on same key tapped event
 	return not Input.keyStates.down[key]
 end
+
+-- MOUSE METHODS
+love.mouse.getPositionComponents = love.mouse.getPosition
+love.mouse.getPosition = function()
+	local x, y = love.mouse.getPositionComponents()
+	return vector(x, y)
+end
