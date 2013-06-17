@@ -6,11 +6,13 @@ Gun:include(Rotatable)
 
 -- LOCAL PROPERTIES
 Gun.reloading = false
+Gun.noise = 0
 
 -- INITIALIZATION
-function Gun:initialize(world, position, size, texture, reloadTime, bulletClass)
+function Gun:initialize(world, position, size, texture, reloadTime, noise, bulletClass)
 	self.reloadTime = reloadTime
 	self.bulletClass = bulletClass
+	self.noise = noise
 
 	GameObject.initialize(self, world, position, size, texture)
 end
@@ -37,6 +39,7 @@ end
 function Gun:fire()
 	self.world:add(self.bulletClass:new(self.world, self.position, math.angleToDirection(self.angle)))
 	self:reload()
+	self.world:generateSound(self.position, self.noise)
 end
 
 function Gun:fireIfAble()
