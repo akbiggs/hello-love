@@ -34,15 +34,15 @@ require "objects.behaviors.gunner"
 require "objects.base.gameobject"
 require "objects.base.physicsobject"
 
-require "objects.world.gun"
 require "objects.world.player"
 require "objects.world.tile"
 require "objects.world.sound"
 
+require "objects.world.guns.gun"
+require "objects.world.guns.lasergun"
+
 require "objects.world.bullets.bullet"
 require "objects.world.bullets.laser"
-
-require "objects.world.guns.lasergun"
 
 -- GLOBAL INITIALIZATIONS
 HC = Collider(10, onCollide)

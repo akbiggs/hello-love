@@ -5,7 +5,7 @@ Laser:include(Rotatable)
 -- STATIC PROPERTIES
 Laser.static.SIZE = vector(16, 16)
 Laser.static.SPEED = 1000
-Laser.static.NOISE = 200
+Laser.static.NOISE = 100
 
 -- LOCAL PROPERTIES
 
