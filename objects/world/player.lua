@@ -89,12 +89,12 @@ end
 
 -- BASIC MOVEMENT
 function Player:moveLeft(dt)
-	self.lastDirection = -1
+	self.lastDirection = Direction.LEFT
 	self:move(self.lastDirection, dt)
 end
 
 function Player:moveRight(dt)
-	self.lastDirection = 1
+	self.lastDirection = Direction.RIGHT
 	self:move(self.lastDirection, dt)
 end
 

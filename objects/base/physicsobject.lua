@@ -5,11 +5,12 @@ PhysicsObject:include(Collidable)
 -- STATIC PROPERTIES
 
 -- LOCAL PROPERTIES
-PhysicsObject.velocity = vector(0, 0)
 
 -- INITIALIZATION
 function PhysicsObject:initialize(world, position, size, texture)
     GameObject.initialize(self, world, position, size, texture)
+
+    self.velocity = vector(0, 0)
 end
 
 -- UPDATE

@@ -20,6 +20,7 @@ World.sounds = {}
 function World:initialize()
 	self:changeLevel("level1")
 	self:add(Player:new(self, vector(200, 100)))
+	self:add(Walker:new(self, vector(400, 300)))
 end
 
 function World:changeLevel(levelName)

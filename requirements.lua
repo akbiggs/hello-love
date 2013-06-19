@@ -20,6 +20,7 @@ require "engine.color"
 require "engine.collisions"
 require "engine.map"
 require "engine.world"
+require "engine.direction"
 
 -- HELPERS
 require "helpers.input"
@@ -38,6 +39,10 @@ require "objects.world.gun"
 require "objects.world.player"
 require "objects.world.tile"
 require "objects.world.sound"
+
+require "objects.world.enemies.enemy"
+require "objects.world.enemies.walker"
+require "objects.world.enemies.sentry"
 
 require "objects.world.bullets.bullet"
 require "objects.world.bullets.laser"
