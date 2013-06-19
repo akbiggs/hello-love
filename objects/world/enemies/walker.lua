@@ -26,6 +26,17 @@ function Walker:walk(direction, dt)
 	self:translateX(dt * direction * Walker.DOCILE_SPEED)
 end
 
+function Walker:die()
+	print("I'm dead!")
+	self.world:remove(self)
+end
+
+-- COLLISIONS
+function Walker:collideWithBullet(other, dx, dy)
+	
+	self:die()
+end
+
 -- DRAW
 function Walker:draw()
 	g.pushStyle(self.style)

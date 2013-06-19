@@ -30,6 +30,8 @@ end
 -- OBJECT OPERATIONS
 function World:generateSound(position, radius)
 	self:add(Sound:new(self, position, radius))
+	Timer.add(0.1, function() self:add(Sound:new(self, position, math.max(radius - 160, 0))) end)
+	Timer.add(0.2, function() self:add(Sound:new(self, position, math.max(radius - 320, 0))) end)
 end
 
 -- a normal operation will wait until the end of the update

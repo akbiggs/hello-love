@@ -31,7 +31,7 @@ end
 
 -- COLLISIONS
 
-function PhysicsObject:collideWithLandscape(dx, dy)
+function PhysicsObject:collideWithLandscape(other, dx, dy)
     self:translate(dx, dy)
 
     if dy < 0 and self.velocity.y > 0 then

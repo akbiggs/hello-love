@@ -1,10 +1,15 @@
 Collidable = {
 	canCollide = true,
     collide = function(self, other, dx, dy)
-        if other.isLandscape and (dx ~= 0 or dy ~= 0) then
-            self:collideWithLandscape(dx, dy)
-        end
+    	if dx ~= 0 or dy ~= 0 then
+	        if other.isLandscape then
+	            self:collideWithLandscape(other, dx, dy)
+	        end
+        elseif instanceOf(Bullet, other) then
+        	self:collideWithBullet(other, dx, dy)
+    	end
     end;
 
-    collideWithLandscape = function(self, dx, dy) end;
+    collideWithLandscape = function(self, other, dx, dy) end;
+    collideWithBullet = function(self, other, dx, dy) end;
 }
