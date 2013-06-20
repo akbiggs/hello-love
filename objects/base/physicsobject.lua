@@ -61,7 +61,7 @@ function PhysicsObject:hitWall()
 end
 
 function PhysicsObject:emitSound(loudness)
-    self.world:generateSound(self:getBottom(), loudness)
+    self.world:generateSound(self, self:getBottom(), loudness)
 end
 
 -- DRAW

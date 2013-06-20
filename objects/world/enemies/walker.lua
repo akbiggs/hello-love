@@ -38,7 +38,7 @@ end
 
 function Walker:collideWithSound(other, dx, dy)
 	if not self.alert then
-		self:say("!!!!!", 20)
+		self:say("!!!!!", 1)
 		self.alert = true
 	end
 end

@@ -29,8 +29,8 @@ function World:changeLevel(levelName)
 end
 
 -- OBJECT OPERATIONS
-function World:generateSound(position, radius)
-	self:add(Sound:new(self, position, radius))
+function World:generateSound(owner, position, radius)
+	self:add(Sound:new(self, owner, position, radius))
 end
 
 -- a normal operation will wait until the end of the update

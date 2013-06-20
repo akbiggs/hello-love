@@ -12,9 +12,10 @@ Sound.static.SUBWAVE_INTERVAL = 0.1
 -- LOCAL PROPERTIES
 
 -- INITIALIZATION
-function Sound:initialize(world, position, radius)
+function Sound:initialize(world, owner, position, radius)
 	self.id = assignID()
 	self.world = world
+	self.owner = owner
 	self.position = position
 
 	self.maxRadius = radius
@@ -22,9 +23,10 @@ function Sound:initialize(world, position, radius)
 
 	self.bbox = BBox(self, position, vector(self.curRadius, self.curRadius))
 
+
 	self.style = Style:new({
-		color = Color:new(0, 0, 127, Sound.START_ALPHA),
-		shader = rainbowGlow, 
+		color = self:getColor(),
+		--shader = rainbowGlow, 
 		lineWidth = 4
 	})
 
@@ -34,12 +36,22 @@ function Sound:initialize(world, position, radius)
 	end
 end
 
+function Sound:getColor()
+	if instanceOf(Player, self.owner) then
+		return Color:new(0, 0, 150, Sound.START_ALPHA)
+	else
+		return Color:new(150, 0, 0, Sound.START_ALPHA)
+	end
+end
+
 function Sound:generateSubWaves()
 	Timer.add(0.1, self.world:add(self:generateSubWave()))
 end
 
 function Sound:generateSubWave()
-	return Sound:new(self.world, self.position, self.maxRadius - Sound.SUBWAVE_SIZE_INCREMENT)
+	subWave = Sound:new(self.world, self.owner, self.position, self.maxRadius - Sound.SUBWAVE_SIZE_INCREMENT)
+	HC:remove(subWave.bbox)
+	return subWave
 end
 
 -- UPDATE

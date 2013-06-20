@@ -13,6 +13,11 @@ tween = require "lib.tween"
 vector = require "lib.hump.vector"
 Timer = require "lib.hump.timer"
 
+-- HELPERS
+require "helpers.input"
+require "helpers.graphics"
+require "helpers.math"
+
 -- ENGINE
 require "engine.effects"
 require "engine.style"
@@ -22,11 +27,6 @@ require "engine.collisions"
 require "engine.map"
 require "engine.world"
 require "engine.direction"
-
--- HELPERS
-require "helpers.input"
-require "helpers.graphics"
-require "helpers.math"
 
 -- OBJECTS
 require "objects.behaviors.collidable"

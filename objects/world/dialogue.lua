@@ -31,15 +31,15 @@ function Dialogue:update(dt)
 end
 
 function Dialogue:show()
-	tween(self.lifetime/8, self.position, {y = self.position.y - 50}, "linear", function()
-		Timer.add(self.lifetime*(3/4), self:hide())
+	tween(self.lifetime/4, self.position, {y = self.position.y - 50}, "linear", function()
+		Timer.add(self.lifetime*(1/2), function() self:hide() end) 
 	end)
-	self:fadeIn(self.lifetime/8)
+	self:fadeIn(self.lifetime/4)
 end
 
 function Dialogue:hide()
-	tween(self.lifetime/8, self.position, {y = self.position.y + 50})
-	self:fadeOut(self.lifetime/8)
+	tween(self.lifetime/4, self.position, {y = self.position.y + 50})
+	self:fadeOut(self.lifetime/4)
 end
 
 function Dialogue:finished()

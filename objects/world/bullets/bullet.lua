@@ -11,7 +11,8 @@ Bullet:include(Collidable)
 -- TODO: this constructor is getting out of hand with arguments, consider
 -- switching to passing an options table instead with some reasonable
 -- default values
-function Bullet:initialize(world, position, size, texture, fireDirection, speed, collisionNoise)
+function Bullet:initialize(world, owner, position, size, texture, fireDirection, speed, collisionNoise)
+	self.owner = owner
 	self.direction = fireDirection
 	self.speed = speed
 	self.noise = collisionNoise
@@ -31,7 +32,7 @@ function Bullet:collideWithLandscape()
 end
 
 function Bullet:explode()
-	self.world:generateSound(self.position, self.noise)
+	self.world:generateSound(self.owner, self.position, self.noise)
 	self.world:remove(self)
 end
 

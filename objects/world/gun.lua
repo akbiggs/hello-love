@@ -37,9 +37,9 @@ end
 
 -- FIRING
 function Gun:fire()
-	self.world:add(self.bulletClass:new(self.world, self.position, math.angleToDirection(self.angle)))
+	self.world:add(self.bulletClass:new(self.world, self.owner, self.position, math.angleToDirection(self.angle)))
 	self:reload()
-	self.world:generateSound(self.position, self.noise)
+	self.world:generateSound(self.owner, self.position, self.noise)
 end
 
 function Gun:fireIfAble()

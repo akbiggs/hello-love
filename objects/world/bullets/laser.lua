@@ -10,8 +10,8 @@ Laser.static.NOISE = 200
 -- LOCAL PROPERTIES
 
 -- INITIALIZATION
-function Laser:initialize(world, position, fireDirection)
-	Bullet.initialize(self, world, position, Laser.SIZE, nil, fireDirection, Laser.SPEED, Laser.NOISE)
+function Laser:initialize(world, owner, position, fireDirection)
+	Bullet.initialize(self, world, owner, position, Laser.SIZE, nil, fireDirection, Laser.SPEED, Laser.NOISE)
 
 	-- TODO: refactor this style crap into a separate style file
 	self.style = Style:new({
