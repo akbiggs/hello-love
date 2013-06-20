@@ -34,18 +34,27 @@ function Dialogue:show()
 	tween(self.lifetime/8, self.position, {y = self.position.y - 50}, "linear", function()
 		Timer.add(self.lifetime*(3/4), self:hide())
 	end)
-	tween(self.lifetime/8, self.style.color, {a = 255})
+	self:fadeIn(self.lifetime/8)
 end
 
 function Dialogue:hide()
-	print("Hide")
 	tween(self.lifetime/8, self.position, {y = self.position.y + 50})
-	tween(self.lifetime/8, self.style.color, {a = 0})
+	self:fadeOut(self.lifetime/8)
 end
 
 function Dialogue:finished()
 	return self.style.color.a == 0
 end
+
+-- TODO: Make these applicable to other classes.
+function Dialogue:fadeIn(duration)
+	tween(duration, self.style.color, {a = 255})
+end
+
+function Dialogue:fadeOut(duration)
+	tween(duration, self.style.color, {a = 0})
+end
+
 
 -- DRAW
 function Dialogue:draw()
