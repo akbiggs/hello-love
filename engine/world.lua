@@ -15,6 +15,7 @@ World.players = {}
 World.bullets = {}
 World.enemies = {}
 World.sounds = {}
+World.dialogues = {}
 
 -- INITIALIZATION
 function World:initialize()
@@ -30,8 +31,6 @@ end
 -- OBJECT OPERATIONS
 function World:generateSound(position, radius)
 	self:add(Sound:new(self, position, radius))
-	Timer.add(0.1, function() self:add(Sound:new(self, position, math.max(radius - 160, 0))) end)
-	Timer.add(0.2, function() self:add(Sound:new(self, position, math.max(radius - 320, 0))) end)
 end
 
 -- a normal operation will wait until the end of the update
@@ -42,6 +41,9 @@ function World:add(object)
 end
 
 function World:unbufferedAdd(object)
+	if not object.id then
+		object.id = assignID()
+	end
 	self:findGroup(object)[object.id] = object
 end
 
@@ -63,6 +65,8 @@ function World:findGroup(object)
 		return self.enemies
 	elseif instanceOf(Sound, object) then 
 		return self.sounds
+	elseif instanceOf(Dialogue, object) then
+		return self.dialogues
 	end
 end
 
@@ -74,6 +78,7 @@ function World:update(dt)
 	self:updateGroup(self.bullets, dt)
 	self:updateGroup(self.enemies, dt)
 	self:updateGroup(self.sounds, dt)
+	self:updateGroup(self.dialogues, dt)
 
 	self:flushBuffers()
 end
@@ -98,6 +103,7 @@ function World:draw()
 
 	self:drawGroup(self.players)
 	self:drawGroup(self.enemies)
+	self:drawGroup(self.dialogues)
 	self:drawGroup(self.bullets)
 	self:drawGroup(self.sounds)
 end

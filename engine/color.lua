@@ -5,6 +5,8 @@ Color = class("engine.Color")
 Color.static.RED = Color:new(255, 0, 0, 255)
 Color.static.GREEN = Color:new(0, 255, 0, 255)
 Color.static.BLUE = Color:new(0, 0, 255, 0)
+Color.static.WHITE = Color:new(255, 255, 255, 255)
+Color.static.TRANSPARENT = Color:new(0, 0, 0, 0)
 
 -- LOCAL PROPERTIES
 

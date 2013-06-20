@@ -1,5 +1,6 @@
 -- CLASS
 Walker = class("objects.world.enemies.Walker", Enemy)
+Walker:include(Talker)
 
 -- STATIC PROPERTIES
 Walker.static.SIZE = vector(32, 64)
@@ -27,14 +28,19 @@ function Walker:walk(direction, dt)
 end
 
 function Walker:die()
-	print("I'm dead!")
 	self.world:remove(self)
 end
 
 -- COLLISIONS
 function Walker:collideWithBullet(other, dx, dy)
-	
 	self:die()
+end
+
+function Walker:collideWithSound(other, dx, dy)
+	if not self.alert then
+		self:say("!!!!!", 20)
+		self.alert = true
+	end
 end
 
 -- DRAW

@@ -3,4 +3,9 @@ BBox = function(parentObject, position, size)
     box.parent = parentObject
     return box
 end
-	
+
+function BCircle(parentObject, position, radius)
+	circle = HC:addCircle(position.x, position.y, radius)
+	circle.parent = parentObject
+	return circle
+end
