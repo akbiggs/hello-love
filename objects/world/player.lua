@@ -3,7 +3,7 @@ Player = class("objects.world.Player", PhysicsObject)
 Player:include(Gunner)
 
 -- STATIC PROPERTIES
-Player.static.SIZE = vector(32, 32)
+Player.static.SIZE = vector(16, 16)
 
 Player.static.LEFT_KEYS = {"left", "A"}
 Player.static.RIGHT_KEYS = {"right", "D"}

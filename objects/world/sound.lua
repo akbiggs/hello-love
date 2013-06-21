@@ -22,7 +22,8 @@ function Sound:initialize(world, owner, position, radius)
 	self.curRadius = 1
 
 	self.bbox = BBox(self, position, vector(self.curRadius, self.curRadius))
-
+	HC:addToGroup("sounds", self.bbox)
+	HC:setPassive(self.bbox)
 
 	self.style = Style:new({
 		color = self:getColor(),
@@ -36,14 +37,6 @@ function Sound:initialize(world, owner, position, radius)
 	end
 end
 
-function Sound:getColor()
-	if instanceOf(Player, self.owner) then
-		return Color:new(0, 0, 150, Sound.START_ALPHA)
-	else
-		return Color:new(150, 0, 0, Sound.START_ALPHA)
-	end
-end
-
 function Sound:generateSubWaves()
 	Timer.add(0.1, self.world:add(self:generateSubWave()))
 end
@@ -52,6 +45,23 @@ function Sound:generateSubWave()
 	subWave = Sound:new(self.world, self.owner, self.position, self.maxRadius - Sound.SUBWAVE_SIZE_INCREMENT)
 	HC:remove(subWave.bbox)
 	return subWave
+end
+
+-- PROPERTIES
+function Sound:getColor()
+	if instanceOf(Player, self.owner) then
+		return Color:new(0, 0, 200, Sound.START_ALPHA)
+	else
+		return Color:new(200, 0, 0, Sound.START_ALPHA)
+	end
+end
+
+function Sound:isLoud()
+	return self.style.color.a > 50
+end
+
+function Sound:isQuiet()
+	return 0 < self.style.color.a and self.style.color.a < 50
 end
 
 -- UPDATE

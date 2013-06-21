@@ -9,6 +9,7 @@ lick = require "lib.lick"
 inspect = require "lib.inspect"
 Collider = require "lib.hardon"
 tween = require "lib.tween"
+Stateful = require "lib.stateful"
 
 vector = require "lib.hump.vector"
 Timer = require "lib.hump.timer"

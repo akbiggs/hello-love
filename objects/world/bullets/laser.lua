@@ -3,7 +3,7 @@ Laser = class("objects.world.bullets.Laser", Bullet)
 Laser:include(Rotatable)
 
 -- STATIC PROPERTIES
-Laser.static.SIZE = vector(16, 16)
+Laser.static.SIZE = vector(8, 8)
 Laser.static.SPEED = 1000
 Laser.static.NOISE = 200
 

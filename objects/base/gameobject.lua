@@ -16,6 +16,8 @@ function GameObject:initialize(world, center, size, texture)
     self.size = size
     self.bbox = BBox(self, center - size/2, size)
     self.texture = texture
+
+    self.shouldRemove = false
 end
 
 -- POSITION GETTERS
@@ -56,6 +58,9 @@ end
 
 -- UPDATE
 function GameObject:update(dt)
+    if self.shouldRemove then
+        self.world:remove(self)
+    end
 end
 
 -- DRAW
